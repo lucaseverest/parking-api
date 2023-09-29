@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
 import { VehicleEnum } from './vehicle-type.enum';
-import { ParkingCompany } from 'src/modules/parking-company/entity/parking-company.entity';
 
 @Entity()
+@Unique(['plate'])
 export class Vehicle {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,7 +24,4 @@ export class Vehicle {
     enum: VehicleEnum,
   })
   type: VehicleEnum;
-
-  @ManyToOne(() => ParkingCompany, (parkingCompany) => parkingCompany.vehicles)
-  parkingCompany: ParkingCompany;
 }

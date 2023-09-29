@@ -1,13 +1,13 @@
-import { Vehicle } from 'src/modules/vehicle/entity/vehicle.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  OneToMany,
+  Unique,
 } from 'typeorm';
 
 @Entity()
+@Unique(['cnpj'])
 export class ParkingCompany {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -35,7 +35,4 @@ export class ParkingCompany {
 
   @Column()
   motorcycleSpacesQuantity: number;
-
-  @OneToMany(() => Vehicle, (vehicle) => vehicle.parkingCompany)
-  vehicles: Vehicle[];
 }

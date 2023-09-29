@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Unique,
+  OneToMany,
+} from 'typeorm';
 import { VehicleEnum } from './vehicle-type.enum';
+import { ParkingRegisters } from 'src/modules/parking-registers/entity/parking-registers.entity';
 
 @Entity()
 @Unique(['plate'])
@@ -24,4 +31,10 @@ export class Vehicle {
     enum: VehicleEnum,
   })
   type: VehicleEnum;
+
+  @OneToMany(
+    () => ParkingRegisters,
+    (parkingRegisters) => parkingRegisters.vehicle,
+  )
+  parkingRegisters: ParkingRegisters[];
 }

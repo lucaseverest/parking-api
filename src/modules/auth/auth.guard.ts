@@ -10,6 +10,15 @@ import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from './decorators/isPublic.decorator';
 
+export type AuthGuardInformationsType = {
+  user: {
+    sub: string;
+    cnpj: string;
+    iat: number;
+    exp: number;
+  };
+};
+
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(

@@ -9,6 +9,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import 'dotenv/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { ParkingRegisters } from './modules/parking-registers/entity/parking-registers.entity';
+import { ParkingRegistersModule } from './modules/parking-registers/parking-registers.module';
 
 @Module({
   imports: [
@@ -19,12 +21,13 @@ import { AuthGuard } from './modules/auth/auth.guard';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [ParkingCompany, Vehicle],
+      entities: [ParkingCompany, Vehicle, ParkingRegisters],
       synchronize: true,
     }),
     AuthModule,
     ParkingCompanyModule,
     VehicleModule,
+    ParkingRegistersModule,
   ],
   controllers: [],
   providers: [

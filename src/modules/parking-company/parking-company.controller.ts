@@ -8,6 +8,7 @@ import {
   Delete,
   Request,
   UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
 import { ParkingCompanyService } from './parking-company.service';
 import { UpdateParkingCompanyDto } from './dtos/update-parking-company.dto';
@@ -35,6 +36,10 @@ export class ParkingCompanyController {
     @Body() updateParkingCompanyData: UpdateParkingCompanyDto,
   ) {
     const { sub: authParkingCompanyId } = req.user;
+
+    if (Object.keys(updateParkingCompanyData).length === 0) {
+      throw new BadRequestException('body is empty');
+    }
 
     if (authParkingCompanyId !== id) {
       throw new UnauthorizedException(

@@ -8,6 +8,7 @@ import {
   NotFoundException,
   Put,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { VehicleService } from './vehicle.service';
 import { CreateVehicleDto } from './dtos/create-vehicle.dto';
@@ -46,6 +47,10 @@ export class VehicleController {
     @Param('plate') plate: string,
     @Body() updateVehicleData: UpdateVehicleDto,
   ) {
+    if (Object.keys(updateVehicleData).length === 0) {
+      throw new BadRequestException('body is empty');
+    }
+
     const vehicle = await this.vehicleService.findVehicleByPlate(plate);
 
     if (!vehicle) {

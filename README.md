@@ -1,73 +1,112 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<h1 align="center">Desafio NodeJS - Dr.consulta</h1>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 💻 Sobre o projeto
+O projeto consiste em um API de gerenciamento de estacionamento, onde é possível cadastrar novos estacionamentos, veículos, bem como registrar saídas e entradas nos estabelecimentos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 💻 Principais Tecnologias
 
-## Description
+- [TypeScript](https://www.typescriptlang.org/)
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/)
+- [MySQL](https://www.mysql.com/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🔌 Rodar o projeto
 
-## Installation
+Exemplo do arquivo .env necessário:
+```
+DATABASE_PORT=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_NAME=
+DATABASE_HOST=
 
-```bash
-$ npm install
+JWT_SECRET=
 ```
 
-## Running the app
 
-```bash
+```sh
+## clonar repositório
+$ git clone https://github.com/lucaseverest/parking-api.git
+
+## Instalar dependências
+$ npm i
+
+## Rodar o projeto
 # development
 $ npm run start
 
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Run on docker container
+$ docker-compose up --build
 ```
+## Diagrama Entidade Relacionamento
+![ER Diagram - parking-api](https://github.com/lucaseverest/parking-api/assets/55161134/3e6d8722-d7a4-459a-8620-4ccee8769939)
 
-## Test
+## 🛣️ Rotas da API
+- Base URL: `http://localhost:30000`
 
-```bash
-# unit tests
-$ npm run test
+- `POST:` Cadastro de empresa: `/auth/signup`  
+        - Body:
+        `{
+        	"name": "center parking",
+        	"cnpj": "09876543216285",
+        	"password": "123456",
+        	"address": "Tenente Coronel, 25",
+        	"phone": "22992718282",
+        	"motorcycleSpacesQuantity": 256,
+        	"carSpacesQuantity": 625
+        }`
+  
+- `POST:` Login da empresa: `/auth/login`  
+        - Body:
+          `{
+          	"cnpj": "12345678912345",
+          	"password": "123456"
+          }`
+- `GET:` Buscar uma empresa: `/parking-company/:id`
+  
+- `PUT:` Atualizar uma empresa: `/parking-company/:id`  
+        - `Body:
+          {
+            "name": "new parking",
+          	"cnpj": "09876543216285",
+          	"address": "Tenente Coronel, 25",
+          	"phone": "22992718282",
+          	"carSpacesQuantity": 625,
+          	"motorcycleSpacesQuantity": 256
+          }`  
+          Obs: todos os campos são opcionais
+  
+- `DELETE:` Deletar uma empresa: `/parking-company:id`  
+- `POST:` Cadastro de veículo: `/vehicle`  
+        - Body:
+        `{
+          "brand": "Ford",
+          "model": "Fiesta",
+          "plate": "KYO2E94",
+          "color": "blue",
+          "type": "car"
+        }`
+  
+- `GET:` Busca de veículo: `/vehicle/:plate`
+  
+  
+- `PUT:` Atualizar um veículo: `/vehicle/:plate`  
+        - Body:
+        `{
+          "brand": "Ford",
+          "model": "Fiesta",
+          "plate": "KYO2E94",
+          "color": "blue",
+          "type": "car"
+        }`  
+        Obs: todos os campos são opcionais
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- `POST:` Lançar movimentação de veículo: `/parking-registers/throw-register?parkingCompanyId=`  
+        - Body:
+          `{
+            	"vehiclePlate": "KYO2E94",
+            	"registerType": "exit"
+            }`
